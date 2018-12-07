@@ -4,6 +4,7 @@ var datab = require('../datab');
 var expressValidator = require('express-validator');
 var bcrypt = require('bcrypt');
 const saltRounds = 10; 
+var passport = require("passport");
 
 //connect to database 
 const connection = datab.con,
@@ -34,6 +35,8 @@ router.get('/login.html', function(req, res, next) {
 });
 // GET forums page
 router.get('/forums.html', function(req, res, next) {
+    console.log(req.user);
+    console.log(req.isAuthenticated);
     res.render('forums');
 });
 
@@ -83,8 +86,26 @@ router.post('/signup.html',  function(req, res, next) {
             connection.query(sql, [req.body.firstname, req.body.lastname, req.body.email, 
             req.body.username, hash], function (error, results, field) {
                 if(error) throw error;
+                connection.query('SELECT LAST_INSERT_ID() as user_id', function(err, result, fields ) {
+                  if (err) throw err;
+                  console.log(result[0]);
+                  const user_id = result[0];
+                  req.login(user_id, function(err) {
+                      res.redirect('/forums');
+                  });
+                });
         });
     });
+    passport.serializeUser(function(user_id, done) {
+    done(null, user_id);
+    });
+ 
+    passport.deserializeUser(function(user_id, done) {
+    User.findById(user_id, function (err, user) {
+    done(err, user);
+  });
+});
+    
     res.render("login", {title: 'Signup Complete'});
 });
 //do this when user posts on registerdistrict.html

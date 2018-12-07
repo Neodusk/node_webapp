@@ -8,6 +8,9 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var app = express();
 
+var session = require("express-session");
+var passport = require("passport");
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -37,5 +40,15 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.set('trust proxy', 1); // trust first proxy
+app.use(session({
+  secret: 'JKLjksdnbfwiohxcnnkswdaocxn980324rhdsnkf7d8s9fhksnfdppppovvserw3',
+  resave: false,
+  saveUninitialized: false,
+  //cookie: { secure: true }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 module.exports = app;
