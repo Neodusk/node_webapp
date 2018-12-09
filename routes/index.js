@@ -27,20 +27,21 @@ setTimeout(function() {
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'IT Forums' });
 });
-router.get('/index.html', function(req, res, next) {
+router.get('/home', function(req, res, next) {
     res.render('index', {title: 'IT Forums'})
 })
 
+
 // GET signup page
-router.get('/signup.html', function(req, res, next) {
+router.get('/signup', function(req, res, next) {
     res.render('signup');
 });
 // GET registerdistrict page
-router.get('/registerdistrict.html', function(req, res, next) {
+router.get('/registerdistrict', function(req, res, next) {
     res.render('registerdistrict');
 });
 // GET login page
-router.get('/login.html', function(req, res, next) {
+router.get('/login', function(req, res, next) {
     res.render('login');
 });
 // GET forums page
@@ -50,7 +51,7 @@ router.get('/forums.html', function(req, res, next) {
     res.render('forums');
 });
 
-router.get('/support.html', function(req, res, next) {
+router.get('/support', function(req, res, next) {
     res.render('support', {title: 'Support'});
 })
 
@@ -86,12 +87,12 @@ passport.use(new Strategy(
 
 
 
-/*router.post('/login.html', passport.authenticate('local', { failureRedirect: '/login.html' }), function(req, res, next) {
+/*router.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), function(req, res, next) {
     console.log(`Username Entered: ${req.body.username}`);
     console.log(`Password Entered: ${req.body.password}`)
     res.render('forums');
 });*/
-router.post('/login.html', function(req, res, next) {
+router.post('/login', function(req, res, next) {
    console.log(req.body);
    res.render("forums");
 });
@@ -99,7 +100,7 @@ router.post('/login.html', function(req, res, next) {
 
 
 //do this when user posts on signup.html
-router.post('/signup.html',  function(req, res, next) {
+router.post('/signup',  function(req, res, next) {
     console.log(req.body);
    //check if fields are empty
    req.checkBody('username', 'Username field cannot be empty').notEmpty();
@@ -174,7 +175,7 @@ router.post('/signup.html',  function(req, res, next) {
    
 });
 //do this when user posts on registerdistrict.html
-router.post('/registerdistrict.html', function(req, res, next) {
+router.post('/registerdistrict', function(req, res, next) {
    console.log(req.body);
    let sql = `INSERT INTO district (district_name, first_name, last_name, email, email_domain, username, password) 
         VALUES (?,?,?,?,?,?,?)`;
