@@ -4,23 +4,74 @@
     <title>IT Forums - <%=title%></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 
 <body class = "bg-secondary">
-    <nav class="navbar navbar-dark bg-dark">
-            <ul class=" text-primary d-inline-flex justify-content-between
-             w-100">
-              <li class="d-flex flex-grow-1"><a href="./forums.html">Forums</a></li>
-              <li class="d-flex flex-grow-1"><a href="./faq.html">FAQ</a></li>
-              <li class="d-flex flex-grow-1"><a href="./about.html">About</a></li>
-              <li class="d-flex flex-grow-1"><a href="./support.html">Support</a></li>
-              <li class="d-inline-flex pl-3 pr-3"><a href="./registerdistrict.html">Register District</a></li>
-              <li class="d-inline-flex pl-3 pr-3"><a href="./signup.html">Sign Up User</a></li>
-              <li class="d-inline-flex pl-3 pr-3"><a href="./login.html">Log In</a></li>
-            </ul>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <a class="navbar-brand" href="./index.html">IT Forums</a>
+      <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link text-primary" href="./signup.html">Sign Up</a>
+          </li><li class="nav-item">
+            <a class="nav-link text-primary" href="./login.html">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-secondary" href="./registerdistrict.html">Register District</a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link text-secondary" href="./support.html">Support</a>
+          </li>
+        </ul>
+      </div>
     </nav>
-    <h1 class = "bg-primary">Welcome to IT Forums!</h1>
-    <p>Going to put some pictures here and explain the purpose.</p>
+<main role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron" style="background-color:dark-gray">
+        <div class="container bg-light shadow-lg">
+          <h1 class="display-3">Welcome to IT Forums!</h1>
+          <p>IT Forums is designed with educational IT professionals in mind. Register your district and 
+          have access to forums specific to your area, or browse public threads. IT Forums is full of pertinent, need
+          to know information to succeed with technology in education.</p>
+          <p><a class="btn btn-outline-primary btn-primary btn-lg mb-3" href="./support.html" role="button">Learn more &raquo;</a></p>
+        </div>
+      </div>
+
+      <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="col-md-4">
+            <h2>Heading</h2>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>Heading</h2>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>Heading</h2>
+            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          </div>
+        </div>
+
+        <hr>
+
+      </div> <!-- /container -->
+
+    </main>
+
+    <footer class="container">
+      <p>&copy; Company 2017-2018</p>
+    </footer>
 </body>
 </html>

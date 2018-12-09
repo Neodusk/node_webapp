@@ -5,22 +5,32 @@ var expressValidator = require('express-validator');
 var bcrypt = require('bcrypt');
 const saltRounds = 10; 
 var passport = require("passport");
-
+var Strategy = require('passport-local').Strategy;
 //connect to database 
 const connection = datab.con,
 checkTableProfiles = datab.checkTableProfiles,
-checkTableDistrict = datab.checkTableDistrict;
+checkTableDistrict = datab.checkTableDistrict,
+checkTableCat = datab.checkTableCat,
+checkTablePosts = datab.checkTablePosts,
+checkTableTopic = datab.checkTableTopic;
 
 //check if tables exist, if not then create
 setTimeout(function() {
-   checkTableProfiles();
+    checkTableProfiles();
     checkTableDistrict(); 
+    checkTableCat();
+    checkTablePosts();
+    checkTableTopic();
 }, 1000); 
     
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'IT Forums' });
 });
+router.get('/index.html', function(req, res, next) {
+    res.render('index', {title: 'IT Forums'})
+})
+
 // GET signup page
 router.get('/signup.html', function(req, res, next) {
     res.render('signup');
@@ -35,10 +45,57 @@ router.get('/login.html', function(req, res, next) {
 });
 // GET forums page
 router.get('/forums.html', function(req, res, next) {
-    console.log(req.user);
-    console.log(req.isAuthenticated);
+    //console.log(req.user);
+    //console.log(req.isAuthenticated);
     res.render('forums');
 });
+
+router.get('/support.html', function(req, res, next) {
+    res.render('support', {title: 'Support'});
+})
+
+/*router.get('/failedsignup.ejs', function(req, res, next) {
+    res.render('failedsignup');
+})*/
+
+/*router.get('/logout.html',
+  function(req, res){
+    req.logout();
+    res.redirect('/');
+})
+
+app.get('/profile',
+  require('connect-ensure-login').ensureLoggedIn(),
+  function(req, res){
+    res.render('profile', { user: req.user });
+});*/
+
+
+passport.use(new Strategy(
+  function(username, password, cb) {
+    datab.username.findByUsername(username, function(err, user) {
+      if (err) { return cb(err); }
+      if (!user) { return cb(null, false); }
+      if (user.password != password) { return cb(null, false); }
+      return cb(null, user);
+    });
+}));
+
+
+
+
+
+
+/*router.post('/login.html', passport.authenticate('local', { failureRedirect: '/login.html' }), function(req, res, next) {
+    console.log(`Username Entered: ${req.body.username}`);
+    console.log(`Password Entered: ${req.body.password}`)
+    res.render('forums');
+});*/
+router.post('/login.html', function(req, res, next) {
+   console.log(req.body);
+   res.render("forums");
+});
+
 
 
 //do this when user posts on signup.html
@@ -68,45 +125,53 @@ router.post('/signup.html',  function(req, res, next) {
         return;
     }
    
-    
-    //let checkdata = `SELECT count(1) from profiles where username = "${req.body.username}" or email = "${req.body.email}"`
-       /* if(err) throw err;
-        connection.query(checkdata, function(error, results,field) {
-            console.log(results);
-           if(error) {
-               //throw error;
-               res.render("Too badd");
-               return
-           }
-        });*/
-    //console.log(checkdata);
+    var checking;
     bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
         if(err) throw err;
-            let sql = `INSERT INTO profiles (first_name, last_name, email, username, password) VALUES (?,?,?,?,?)`;
-            connection.query(sql, [req.body.firstname, req.body.lastname, req.body.email, 
-            req.body.username, hash], function (error, results, field) {
-                if(error) throw error;
-                connection.query('SELECT LAST_INSERT_ID() as user_id', function(err, result, fields ) {
-                  if (err) throw err;
-                  console.log(result[0]);
-                  const user_id = result[0];
-                  req.login(user_id, function(err) {
-                      res.redirect('/forums');
-                  });
-                });
-        });
+            var checkUser = `SELECT * FROM profiles WHERE username="${req.body.username}" OR email="${req.body.email}"`;
+            //console.log(checkUser);
+            connection.query(checkUser, function(err, res, field) {
+                if (err) throw err;
+                var resstring = JSON.stringify(res);
+                //console.log(resstring);
+                if (resstring == "[]") {
+                    console.log("User and email do not exist");
+                    let sql = `INSERT INTO profiles (first_name, last_name, email, username, password) VALUES (?,?,?,?,?)`;
+                    setTimeout(function() {
+                    console.log(`Creating user ${req.body.username}`);
+                    connection.query(sql, [req.body.firstname, req.body.lastname, req.body.email, 
+                    req.body.username, hash], function (error, results, field) {
+                        if(error) throw error;
+                        checking = true;
+            });
+        },10);
+                } else {
+                    console.log("Username is taken or email is in use, please try a different one");
+                    checking = false;
+                    
+                }
+            })
+            passport.serializeUser(function(user, done) {
+                      done(null, user);
+                    });
+                    
+                    passport.deserializeUser(function(user, done) {
+                      done(null, user);
+                    });;
+            setTimeout(function() {
+                if (checking) {
+                console.log("Sending to login");
+                res.render("login", {title: 'Signup Complete'});
+                }
+            }, 100);
+            setTimeout(function() {
+                if (checking == false) {
+                console.log("User creation failed");
+                res.render("signup", {title: 'Signup Incomplete'});
+                }
+            }, 100);
     });
-    passport.serializeUser(function(user_id, done) {
-    done(null, user_id);
-    });
- 
-    passport.deserializeUser(function(user_id, done) {
-    User.findById(user_id, function (err, user) {
-    done(err, user);
-  });
-});
-    
-    res.render("login", {title: 'Signup Complete'});
+   
 });
 //do this when user posts on registerdistrict.html
 router.post('/registerdistrict.html', function(req, res, next) {
