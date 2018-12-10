@@ -7,7 +7,7 @@ var expressValidator = require('express-validator');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var app = express();
-
+var flash = require('connect-flash');
 var session = require("express-session");
 var passport = require("passport");
 
@@ -20,6 +20,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressValidator());
 app.use(session({
@@ -57,3 +58,4 @@ app.set('trust proxy', 1); // trust first proxy
 
 
 module.exports = app;
+

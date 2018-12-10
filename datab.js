@@ -149,10 +149,6 @@ module.exports.checkTablePosts = function checkTablePosts() {
 }
 
 
-
-
-
-
 exports.con = connection;
 exports.database = database;
 exports.password = password;
