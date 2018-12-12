@@ -58,13 +58,22 @@
 
     <main role="main" class="container">
       <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
-        <img class="mr-3" src="power.png" alt="" width="48" height="48">
+        <img class="mr-3" src="images/power.png" alt="" width="65" height="48">
         <div class="lh-100">
           <h6 class="mb-0 text-white lh-100">IT Forums</h6>
           <small>Since 2018</small>
         </div>
       </div>
-      <button class="btn btn-primary pull-right" id="addtopicbutton" onclick="addTopic()">Add Topic</button>
+      <button class="btn btn-primary pull-right" id="addtopicbutton">Add Topic</button>
+      <div class="my-3 p-3 rounded bg-dark rounded" id="forumadd">
+        <form action="forums" method="post">
+          <input class="form-control mb-3 p-3" type="text" name="subject" placeholder="Subject" minlength="1" 
+          maxlength ="100" required>
+          <textarea class="form-control mb-3 "name="descriptions" placeholder="Describe the issue here..." minlength="1" 
+          maxlength ="255" required></textarea>
+          <input type="submit" class="btn btn-outline-primary" value="Submit">
+        </form>
+      </div>
       <div class="my-3 p-3 bg-white rounded box-shadow">
         <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
         <div class="media text-muted pt-3">
@@ -136,6 +145,6 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="/public/forumbuttons.js"></script>
+<script src="/javascripts/forumbuttons.js"></script>
   </body>
 </html>

@@ -130,7 +130,8 @@ module.exports.checkTablePosts = function checkTablePosts() {
         //if cannot select from table category, create table district
         if (err) {
             console.log("Table 'posts' does not exist, creating table...");
-            let table = 'CREATE TABLE posts(post_id int AUTO_INCREMENT, post_content VARCHAR(255), post_date DATETIME, post_by INT(8), PRIMARY KEY (post_id))';
+            //let table = 'CREATE TABLE posts(post_id int AUTO_INCREMENT, post_content VARCHAR(255), post_date DATETIME, post_by INT(8), PRIMARY KEY (post_id))';
+            let table=`CREATE TABLE posts(post_id int AUTO_INCREMENT, post_subject VARCHAR(100), post_content VARCHAR(255), post_date DATETIME, PRIMARY KEY (post_id))`
             connection.query(table, (err,result) => {
             //throw err if cannot create table
             if(err) {

@@ -84,6 +84,9 @@ app.get('/profile',
     console.log(`Password Entered: ${req.body.password}`)
     res.render('forums');
 });*/
+
+
+
 router.post('/login' , passport.authenticate('local-login', {successRedirect: '/forums', failureRedirect: '/login', 
 failureFlash:'Invalid username or password. Please try again', successFlash:'Welcome'}), function(req, res, next) {
     console.log(req.body);
@@ -185,8 +188,13 @@ router.post('/registerdistrict', function(req, res, next) {
     res.render("login", { title: 'Registration Complete' });
 });
 
-router.post('/createnewtopic', function(req,res,next) {
+router.post('/forums', function(req,res,next) {
     console.log(req.body);
+       let sql = `INSERT INTO posts (post_subject, post_content) VALUES (?,?)`;
+       connection.query(sql, [req.body.subject, req.body.descriptions], function(err, res, field) {
+         if(err) throw err; 
+       });
+       res.render('forums');
 });
 
 
