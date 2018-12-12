@@ -70,6 +70,8 @@ router.get('/logout',
 })
 
 
+
+
 /*
 app.get('/profile',
   require('connect-ensure-login').ensureLoggedIn(),
@@ -196,6 +198,34 @@ router.post('/forums', function(req,res,next) {
        });
        res.render('forums');
 });
+
+router.get('/search', function(req, res, next) {
+    res.render('search');
+    //res.send(`Search results:\n ${check} `);
+})
+
+
+var test = [];
+router.post('/search', function(req, res, next) {
+    //res.render('search');
+    console.log(req.body.searchInput);
+    
+    let sql = `SELECT * FROM posts WHERE post_subject LIKE "%${req.body.searchInput}%" OR post_content LIKE "%${req.body.searchInput}%"`
+    //need to parse for results and display properly
+    connection.query(sql, [req.body.searchInput], function(err, res, field) {
+        if (err) throw err;
+       // create an array to store results for(var i = 0; i < test.length(); i++)
+        var stringy = JSON.stringify(res);
+        
+        console.log(stringy);
+        test = stringy;
+    });
+    setTimeout(function() {
+        
+    res.send(test);
+    }, 1000);
+})
+
 
 
 module.exports = router;
