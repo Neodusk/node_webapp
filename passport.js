@@ -11,11 +11,11 @@ module.exports = (passport) => {
     passReqToCallback : true
   },
   // Create the authentication function
-  async function(req, email, password, callback) {
+  async function(req, username, password, callback) {
     // Query the DB for the user
     const user =  await Users.findOne({
       where: {
-        userEmail: email
+        username: username
       }
     });
     if (user == null) {
@@ -40,10 +40,9 @@ module.exports = (passport) => {
     // deserializing.
     passport.serializeUser(function(user, callback) {
       callback(null, {
-          userID: user.userID,
-          userFirstName: user.userFirstName,
-          userLastName: user.userLastName,
-          userLevel: user.userLevel
+          userID: user.id,
+          userFirstName: user.first_name,
+          userLastName: user.last_name,
       });
     });
 
